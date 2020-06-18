@@ -5,19 +5,22 @@ import java.util.*;
 
 public class Maps {
     public static void main(String[] args) {
-        hashMaps();
+        //hashMaps();
+        //linkedHashMaps();
         treeMaps();
-        linkedHashMaps();
     }
 
     private static void hashMaps() {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(16, 0.99f);
 
         for (int i = 1; i <= 12; i++) {
             map.put("Key " + i, "Value " + i);
         }
 
         System.out.println(map);
+        System.out.println(String.format("Size: %d. Capacity: %d. Load Factor: %f.", map.size(), getCapacity(map), getLoadFactor(map)));
+
+        map.put("Key 13", "Value 13");
         System.out.println(String.format("Size: %d. Capacity: %d. Load Factor: %f.", map.size(), getCapacity(map), getLoadFactor(map)));
     }
 
@@ -28,18 +31,24 @@ public class Maps {
             map.put("Key " + i, "Value " + i);
         }
 
+        // Печать по-порядку
         System.out.println(map);
     }
 
     private static void treeMaps() {
-        NavigableMap<Integer, String> map = new TreeMap<>(Comparator.reverseOrder());
+        NavigableMap<Float, String> map = new TreeMap<>();
 
-        for (int i = 1; i <= 5; i++) {
+        for (float i = 1; i <= 5; i++) {
             map.put(i, "Value " + i);
         }
 
-        System.out.println(map.ceilingEntry(3));
-        System.out.println(map.subMap(4, 1));
+        map.put(4.5f, "Value 4.5");
+
+        System.out.println(map);
+
+        System.out.println(map.ceilingEntry(2.6f));
+        System.out.println(map.floorEntry(2.6f));
+        System.out.println(map.subMap(1.3f, 4.5f));
     }
 
     private static <K, V> int getCapacity(Map<K, V> map) {

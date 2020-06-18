@@ -3,7 +3,7 @@ package dev.astamur.geekbrains.lessons.lesson3;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Cat implements Comparable<Cat> {
+public class Cat /* implements Comparable<Cat> */ {
     private String name;
     private int age;
 
@@ -12,11 +12,14 @@ public class Cat implements Comparable<Cat> {
         this.age = age;
     }
 
-
-    @Override
-    public int compareTo(Cat o) {
-        return this.age - o.age;
+    public int getAge() {
+        return age;
     }
+
+//    @Override
+//    public int compareTo(Cat o) {
+//        return this.age - o.age;
+//    }
 
     @Override
     public String toString() {

@@ -1,17 +1,17 @@
 package dev.astamur.geekbrains.lessons.lesson3;
 
-public class Arrays {
+import java.util.Arrays;
+
+public class ArraysExamples {
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4};
-        System.out.println(java.util.Arrays.toString(arr));
+        int[] arr = {1, 2, 3, 4, 5};
+        System.out.println(Arrays.toString(arr));
 
         // Хотим увеличить массив
         int[] arrNew = new int[10];
         System.arraycopy(arr, 0, arrNew, 0, arr.length);
-
         arr = arrNew;
-        arrNew = null;
 
-        System.out.println(java.util.Arrays.toString(arr));
+        System.out.println(Arrays.toString(arr));
     }
 }
