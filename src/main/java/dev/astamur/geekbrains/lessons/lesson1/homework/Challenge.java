@@ -7,7 +7,7 @@ public class Challenge {
         Athlete[] athletes = new Athlete[]{
                 new Human("Luke", 5000, 1.5),
                 new Robot("C3PO", 1000, 0.5),
-                new Cat("Tom", 3000, 1),
+                new Cat("Tom", 3000, 1)
         };
 
         boolean[] access = new boolean[athletes.length];
@@ -21,8 +21,9 @@ public class Challenge {
                 new Track(5000)
         };
 
+        int index = 0;
         for (Obstacle obstacle : obstacles) {
-            System.out.printf("\nObstacle: %s\n", obstacle);
+            System.out.printf("\nObstacle %d: %s\n", ++index, obstacle);
 
             for (int i = 0; i < athletes.length; i++) {
                 if (access[i] && !obstacle.perform(athletes[i])) {

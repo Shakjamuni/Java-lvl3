@@ -5,6 +5,7 @@ public class Human extends AbstractAthlete {
         super(name, maxRunDistance, maxJumpHeight);
     }
 
+    @Override
     public boolean jump(double height) {
         if (maxJumpHeight >= height) {
             System.out.printf("Human '%s' jumped %f\n", name, height);
@@ -15,6 +16,7 @@ public class Human extends AbstractAthlete {
         }
     }
 
+    @Override
     public boolean run(double distance) {
         if (maxRunDistance >= distance) {
             System.out.printf("Human '%s' ran %f\n", name, distance);

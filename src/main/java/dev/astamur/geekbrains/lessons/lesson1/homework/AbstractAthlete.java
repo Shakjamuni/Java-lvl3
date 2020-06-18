@@ -11,6 +11,7 @@ public abstract class AbstractAthlete implements Athlete {
         this.maxJumpHeight = maxJumpHeight;
     }
 
+    @Override
     public String getName() {
         return name;
     }
