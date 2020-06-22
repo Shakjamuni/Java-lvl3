@@ -11,7 +11,7 @@ import java.util.*;
 class PhoneBook {
 
     HashMap<String, String> phonebook = new HashMap<>();
-
+// метод добавония данных в телефонную книгу. номер телефона как уникалтный ключ.
     void add(String phone, String name) {
         phonebook.put(phone, name);
     }
@@ -75,9 +75,11 @@ public class Lesson3 {
         phoneBook.add("4563603020", "Vladimir Lenin");
         phoneBook.add("8899003020", "Mahatma Ghandi");
         phoneBook.add("78787873020", "Mahatma Ghandi");
+        phoneBook.add("9154445544","Jesus Christ");
         phoneBook.get("Vladimir Rumyancev");
         phoneBook.get("Anatoliy Sidorov");
         phoneBook.get("Mahatma Ghandi");
+        phoneBook.get("Jesus Christ");
 
 
     }
