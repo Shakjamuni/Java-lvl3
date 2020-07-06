@@ -1,5 +1,7 @@
 package dev.astamur.geekbrains.lessons.lesson7.server;
 
+import dev.astamur.geekbrains.lessons.lesson7.client.Client;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -47,8 +49,13 @@ public class MyServer {
         }
     }
 
+
     public synchronized void broadcastMsg(String from, String msg) {
         broadcastMsg(formatMessage(from, msg));
+    }
+
+    public synchronized void wispMsg(String to, String msg) {
+        clients.get(to).sendMsg("/w "+msg);
     }
 
     public synchronized void unsubscribe(ClientHandler o) {

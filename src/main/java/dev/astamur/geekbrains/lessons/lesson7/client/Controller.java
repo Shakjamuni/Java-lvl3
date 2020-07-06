@@ -15,6 +15,9 @@ public class Controller implements Initializable {
     TextArea textArea;
 
     @FXML
+    TextArea personalArea;
+
+    @FXML
     TextField msgField, loginField;
 
     @FXML
@@ -36,6 +39,8 @@ public class Controller implements Initializable {
         msgPanel.setManaged(authenticated);
         clientsList.setVisible(authenticated);
         clientsList.setManaged(authenticated);
+        personalArea.setVisible(authenticated);
+        personalArea.setManaged(authenticated);
         if (!authenticated) {
             nickname = "";
         }
@@ -83,11 +88,15 @@ public class Controller implements Initializable {
             setAuthenticated(true);
             nickname = args[0].toString();
         });
-
         network.setCallOnMsgReceived(args -> {
             String msg = args[0].toString();
-            textArea.appendText(msg + "\n");
+            if(msg.startsWith("/w")){
+                personalArea.appendText(msg.substring(2));
+            } else {
+                textArea.appendText(msg + "\n");
+            }
         });
+
     }
 
     private void clientClickHandler(MouseEvent event) {

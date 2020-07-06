@@ -67,11 +67,30 @@ public class ClientHandler {
             String strFromClient = in.readUTF();
             System.out.println("от " + name + ": " + strFromClient);
             if (strFromClient.equals("/end")) {
+                closeConnection();
                 return;
             }
 
-            myServer.broadcastMsg(name, strFromClient);
+            //wisp mode
+            if (strFromClient.startsWith("/w")) {
+                // то - кому шепчем, msg - сообщение.
+                String to = strFromClient.split("\\s")[1];
+                String msg = strFromClient.split("\\s")[2];
+                //проверяем шлем ли самому себе, и есть ли ник на сервере.
+                if (!to.equals(name) && myServer.isNickBusy(to)) {
+                    myServer.wispMsg(to, msg);
+                } else if (to.equals(name)) {
+                    myServer.wispMsg(name, "Вы пытаетесь отправить сообщение себе...");
+                } else if (myServer.isNickBusy(to)) {
+                    myServer.wispMsg(name, "Пользователя нет на сервере...");
+                }
+                //конец проверок с режимом /w
+            } else {
+                //шлем сообщение в общий чат
+                myServer.broadcastMsg(name, strFromClient);
+            }
         }
+
     }
 
     public void sendMsg(String msg) {
