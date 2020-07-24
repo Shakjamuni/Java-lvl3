@@ -1,6 +1,5 @@
 package dev.astamur.geekbrains.lessons.Lesson7add.client;
 
-import dev.astamur.geekbrains.lessons.lesson7.client.Network;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,7 +29,7 @@ public class Controller implements Initializable {
     @FXML
     ListView<String> clientsList;
 
-    private dev.astamur.geekbrains.lessons.lesson7.client.Network network;
+    private Network network;
     private String nickname;
 
     public void setAuthenticated(boolean authenticated) {

@@ -1,12 +1,11 @@
 package dev.astamur.geekbrains.lessons.Lesson7add.server;
 
-import dev.astamur.geekbrains.lessons.lesson7.server.AuthService;
-
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BaseAuthService implements AuthService {
-    private List<Entry> entries;
+    private List<Entry> entries = new ArrayList<>();
 
     @Override
     public void start() {
@@ -19,11 +18,15 @@ public class BaseAuthService implements AuthService {
     }
 
 
-    public BaseAuthService() {
-        entries = new ArrayList<>();
-        entries.add(new Entry("login1", "pass1", "nick1"));
-        entries.add(new Entry("login2", "pass2", "nick2"));
-        entries.add(new Entry("login3", "pass3", "nick3"));
+    public BaseAuthService() throws SQLException {
+        SqlBaseForUsers sqlBaseForUsers = new SqlBaseForUsers();
+        sqlBaseForUsers.setUpDB();
+        sqlBaseForUsers.getUsersList();
+        sqlBaseForUsers.rs = sqlBaseForUsers.stmt.executeQuery("SELECT * FROM usersInChat");
+        while (sqlBaseForUsers.rs.next()) {
+            entries.add(new Entry(sqlBaseForUsers.rs.getString(2), sqlBaseForUsers.rs.getString(3), sqlBaseForUsers.rs.getString(1)));
+        }
+
     }
 
     @Override
@@ -34,7 +37,7 @@ public class BaseAuthService implements AuthService {
         return null;
     }
 
-    private static class Entry {
+    static class Entry {
         private String login;
         private String pass;
         private String nick;

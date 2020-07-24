@@ -1,7 +1,5 @@
 package dev.astamur.geekbrains.lessons.Lesson7add.client;
 
-import dev.astamur.geekbrains.lessons.lesson7.client.Callback;
-
 import java.io.Closeable;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

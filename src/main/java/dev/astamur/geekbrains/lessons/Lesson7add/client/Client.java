@@ -1,6 +1,5 @@
 package dev.astamur.geekbrains.lessons.Lesson7add.client;
 
-import dev.astamur.geekbrains.lessons.lesson7.client.Controller;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;

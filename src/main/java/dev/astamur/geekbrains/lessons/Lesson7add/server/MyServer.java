@@ -1,13 +1,9 @@
 package dev.astamur.geekbrains.lessons.Lesson7add.server;
 
-import dev.astamur.geekbrains.lessons.lesson7.client.Client;
-import dev.astamur.geekbrains.lessons.lesson7.server.AuthService;
-import dev.astamur.geekbrains.lessons.lesson7.server.BaseAuthService;
-import dev.astamur.geekbrains.lessons.lesson7.server.ClientHandler;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +29,7 @@ public class MyServer {
                 System.out.println("Клиент подключился");
                 new ClientHandler(this, socket);
             }
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             System.out.println("Ошибка в работе сервера");
         } finally {
             if (authService != null) {

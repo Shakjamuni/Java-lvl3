@@ -5,7 +5,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.concurrent.TimeUnit;
 
 public class ClientHandler {
     private MyServer myServer;
@@ -49,6 +48,8 @@ public class ClientHandler {
                             in.close();
                             out.close();
                             socket.close();
+                            running = false;
+                        } else if (socket.isClosed()) {
                             running = false;
                         }
                     }

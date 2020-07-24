@@ -2,7 +2,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="dev.astamur.geekbrains.lessons.lesson4.Controller"
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="dev.astamur.geekbrains.lessons.Lesson7add.client.Controller"
       alignment="center">
     <HBox fx:id="msgPanel">
         <TextField fx:id="msgField" promptText="Введите сообщение..." HBox.hgrow="ALWAYS" onAction="#sendMsg"/>
