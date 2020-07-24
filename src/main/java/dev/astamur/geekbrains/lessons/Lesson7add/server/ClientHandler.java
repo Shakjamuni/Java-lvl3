@@ -1,19 +1,20 @@
 package dev.astamur.geekbrains.lessons.Lesson7add.server;
 
-import dev.astamur.geekbrains.lessons.lesson7.server.MyServer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 public class ClientHandler {
-    private dev.astamur.geekbrains.lessons.lesson7.server.MyServer myServer;
+    private MyServer myServer;
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
-
     private String name;
+    long counter = 0;
+    boolean running = true;
 
     public String getName() {
         return name;
@@ -30,18 +31,41 @@ public class ClientHandler {
                 try {
                     authentication();
                     readMessages();
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 } finally {
                     closeConnection();
                 }
             }).start();
-        } catch (IOException e) {
+            //запускаем поток отсчета таймаута.
+            new Thread(() -> {
+                try {
+                    while (running) {
+                        Thread.sleep(1000);
+                        counter++;
+                        System.out.println(counter);
+                        if (counter >= 120 && name.equals("")) {
+                            sendMsg("Время авторизации на сервере вышло...");
+                            in.close();
+                            out.close();
+                            socket.close();
+                            running = false;
+                        }
+                    }
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+
+        } catch (
+                IOException e) {
             throw new RuntimeException("Проблемы при создании обработчика клиента");
         }
+
     }
 
-    public void authentication() throws IOException {
+
+    public void authentication() throws IOException, InterruptedException {
         while (true) {
             String str = in.readUTF();
             if (str.startsWith("/auth")) {
@@ -53,6 +77,7 @@ public class ClientHandler {
                         name = nick;
                         myServer.broadcastMsg(name + " зашел в чат");
                         myServer.subscribe(this);
+                        running = false;
                         return;
                     } else {
                         sendMsg("Учетная запись уже используется");
@@ -63,6 +88,7 @@ public class ClientHandler {
             }
         }
     }
+
 
     public void readMessages() throws IOException {
         while (true) {
