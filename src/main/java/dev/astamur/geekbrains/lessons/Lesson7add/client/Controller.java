@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -31,6 +32,7 @@ public class Controller implements Initializable {
 
     private Network network;
     private String nickname;
+    private boolean authed = false;
 
     public void setAuthenticated(boolean authenticated) {
         authPanel.setVisible(!authenticated);
@@ -44,13 +46,18 @@ public class Controller implements Initializable {
         if (!authenticated) {
             nickname = "";
         }
+        authed = true;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setAuthenticated(false);
         clientsList.setOnMouseClicked(this::clientClickHandler);
-        createNetwork();
+        try {
+            createNetwork();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         network.connect();
     }
 
@@ -78,22 +85,24 @@ public class Controller implements Initializable {
         });
     }
 
-    public void createNetwork() {
+
+    public void createNetwork() throws IOException {
         network = new Network();
         network.setCallOnException(args -> showAlert(args[0].toString()));
-
         network.setCallOnCloseConnection(args -> setAuthenticated(false));
-
         network.setCallOnAuthenticated(args -> {
             setAuthenticated(true);
             nickname = args[0].toString();
+            //печатаем историю чере метод в текстовом поле textArea после аутентификации.
+            network.printHistory(textArea);
+            //.
         });
         network.setCallOnMsgReceived(args -> {
             String msg = args[0].toString();
-            if(msg.startsWith("/w")){
+            if (msg.startsWith("/w")) {
                 personalArea.appendText(msg.substring(2));
             } else {
-                textArea.appendText(msg + "\n"+" ");
+                textArea.appendText(msg + "\n" + " ");
             }
         });
 
